@@ -108,11 +108,40 @@
                     <div :class="`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold text-white shrink-0 shadow-sm transition-transform group-hover:scale-110 ${getAvatarColor(customer.name)}`">
                       {{ customer.name.charAt(0).toUpperCase() }}
                     </div>
-                    <div class="min-w-0">
+                    <div class="min-w-0 flex-1">
                       <span class="text-[13px] font-bold text-gray-900 dark:text-gray-100 block truncate">{{ customer.name }}</span>
-                      <div class="flex sm:hidden items-center gap-2 mt-0.5">
-                        <span v-if="customer.category" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 dark:bg-indigo-900/20 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800/50">{{ customer.category.name }}</span>
-                        <span class="text-[10px] font-mono text-gray-400 truncate">{{ customer.phone_number || '-' }}</span>
+                      
+                      <!-- Mobile Detail: Category & Contact -->
+                      <div class="flex flex-col gap-1.5 mt-1 sm:hidden">
+                        <div class="flex items-center gap-2">
+                          <div v-if="customer.category" class="flex items-center gap-1">
+                            <Tags class="w-2.5 h-2.5 text-indigo-500/60" />
+                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-indigo-50/50 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800/50 uppercase tracking-tight">{{ customer.category.name }}</span>
+                          </div>
+                          <span v-if="customer.created_at" class="text-[9px] font-medium text-gray-400 font-mono tracking-tighter">📅 {{ customer.created_at.split('T')[0] }}</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                          <span class="text-[10px] font-mono font-bold text-gray-500 bg-gray-50 dark:bg-zinc-800 px-1.5 rounded">{{ customer.phone_number || '-' }}</span>
+                          <span v-if="customer.email" class="text-[10px] text-gray-400 truncate max-w-[120px] font-medium underline decoration-gray-200 decoration-dotted">{{ customer.email }}</span>
+                        </div>
+                      </div>
+
+                      <!-- Mobile Action Buttons -->
+                      <div class="flex sm:hidden items-center gap-2 mt-3 w-full max-w-[280px]">
+                        <button 
+                          @click.stop="openEditModal(customer)" 
+                          class="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800 text-amber-600 dark:text-amber-400 text-[11px] font-bold shadow-sm transition-all active:scale-95"
+                        >
+                          <Pencil class="w-3.5 h-3.5" />
+                          Edit
+                        </button>
+                        <button 
+                          @click.stop="confirmDelete(customer.id)" 
+                          class="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-red-600 dark:bg-red-500 text-white text-[11px] font-bold shadow-md shadow-red-500/20 transition-all active:scale-95"
+                        >
+                          <Trash2 class="w-3.5 h-3.5" />
+                          Hapus
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -196,10 +225,9 @@
       </div>
     </div>
 
-    <!-- Customer Detail Dialog -->
     <Dialog :open="isDetailModalOpen" @update:open="isDetailModalOpen = $event">
-      <DialogContent class="sm:max-w-md bg-white dark:bg-zinc-900 border-gray-100 dark:border-zinc-800 shadow-2xl overflow-hidden rounded-2xl p-0">
-        <div class="p-6 border-b border-gray-100 dark:border-zinc-800 relative overflow-hidden">
+      <DialogContent class="max-w-[95vw] sm:max-w-md bg-white dark:bg-zinc-900 border-gray-100 dark:border-zinc-800 shadow-2xl overflow-hidden rounded-2xl p-0 max-h-[95vh] flex flex-col">
+        <div class="p-5 sm:p-6 border-b border-gray-100 dark:border-zinc-800 relative overflow-hidden flex-shrink-0">
           <div class="absolute top-0 right-0 p-8 opacity-5">
             <Users class="w-32 h-32" />
           </div>
@@ -209,11 +237,11 @@
           </DialogDescription>
         </div>
 
-        <div v-if="isLoadingDetail" class="py-12 flex justify-center">
+        <div v-if="isLoadingDetail" class="py-12 flex justify-center flex-1">
           <Loader2 class="w-8 h-8 animate-spin text-indigo-500" />
         </div>
         
-        <div v-else-if="selectedCustomer" class="p-6 space-y-6">
+        <div v-else-if="selectedCustomer" class="p-5 sm:p-6 space-y-6 overflow-y-auto flex-1">
           <div class="flex items-center gap-5 pb-5 border-b border-gray-50 dark:border-zinc-800/50">
             <div :class="`w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold text-white shrink-0 shadow-md ${getAvatarColor(selectedCustomer.name)}`">
               {{ selectedCustomer.name.charAt(0).toUpperCase() }}
@@ -250,10 +278,9 @@
       </DialogContent>
     </Dialog>
 
-    <!-- Create Dialog -->
     <Dialog :open="isCreateModalOpen" @update:open="val => { if (!isSubmitting) isCreateModalOpen = val }">
-      <DialogContent class="sm:max-w-lg bg-white dark:bg-zinc-900 border-gray-100 dark:border-zinc-800 shadow-2xl overflow-hidden rounded-2xl p-0">
-        <div class="flex items-center gap-4 p-5 border-b border-gray-100 dark:border-zinc-800 bg-gray-50/30 dark:bg-zinc-800/20">
+      <DialogContent class="max-w-[95vw] sm:max-w-lg bg-white dark:bg-zinc-900 border-gray-100 dark:border-zinc-800 shadow-2xl overflow-hidden rounded-2xl p-0 max-h-[95vh] flex flex-col">
+        <div class="flex items-center gap-4 p-5 border-b border-gray-100 dark:border-zinc-800 bg-gray-50/30 dark:bg-zinc-800/20 flex-shrink-0">
           <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shrink-0">
             <Plus class="w-5 h-5 text-white" />
           </div>
@@ -263,8 +290,8 @@
           </div>
         </div>
 
-        <form @submit.prevent="submitCreate" class="p-5 space-y-5" novalidate>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form @submit.prevent="submitCreate" class="p-5 flex-1 flex flex-col min-h-0 overflow-hidden" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto flex-1 pr-1 custom-scrollbar">
             <!-- Nama -->
             <div class="space-y-1.5 col-span-1">
               <label for="create-name" class="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-widest">Nama Lengkap <span class="text-red-500 font-bold">*</span></label>
@@ -312,22 +339,21 @@
             </div>
           </div>
 
-          <div class="flex gap-3 pt-4">
-            <Button type="button" variant="outline" class="flex-1 rounded-xl py-6 font-bold tracking-wide border-gray-100 dark:border-zinc-800 text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200" @click="isCreateModalOpen = false" :disabled="isSubmitting">Kembali</Button>
-            <Button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-6 font-bold shadow-lg shadow-indigo-500/20 gap-2 transition-all active:scale-95" :disabled="isSubmitting || !createForm.name || !createForm.phone_number">
+          <div class="flex flex-col-reverse sm:flex-row gap-3 pt-6 flex-shrink-0">
+            <Button type="button" variant="outline" class="flex-1 rounded-xl h-12 sm:py-6 font-bold tracking-wide border-gray-100 dark:border-zinc-800 text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 transition-all" @click="isCreateModalOpen = false" :disabled="isSubmitting">Kembali</Button>
+            <Button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl h-12 sm:py-6 font-bold shadow-lg shadow-indigo-500/20 gap-2 transition-all active:scale-95" :disabled="isSubmitting || !createForm.name || !createForm.phone_number">
               <Loader2 v-if="isSubmitting" class="w-4 h-4 animate-spin text-white" />
               <Plus v-else class="w-4 h-4 text-white/50" />
-              {{ isSubmitting ? 'Mendaftarkan...' : 'Konfirmasi Pendaftaran' }}
+              {{ isSubmitting ? 'Mendaftarkan...' : 'Konfirmasi' }}
             </Button>
           </div>
         </form>
       </DialogContent>
     </Dialog>
 
-    <!-- Edit Dialog -->
     <Dialog :open="isEditModalOpen" @update:open="val => { if (!isUpdating) isEditModalOpen = val }">
-      <DialogContent class="sm:max-w-lg bg-white dark:bg-zinc-900 border-gray-100 dark:border-zinc-800 shadow-2xl overflow-hidden rounded-2xl p-0">
-        <div class="flex items-center gap-4 p-5 border-b border-gray-100 dark:border-zinc-800 bg-amber-50/30 dark:bg-amber-900/10">
+      <DialogContent class="max-w-[95vw] sm:max-w-lg bg-white dark:bg-zinc-900 border-gray-100 dark:border-zinc-800 shadow-2xl overflow-hidden rounded-2xl p-0 max-h-[95vh] flex flex-col">
+        <div class="flex items-center gap-4 p-5 border-b border-gray-100 dark:border-zinc-800 bg-amber-50/30 dark:bg-amber-900/10 flex-shrink-0">
           <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shrink-0">
             <Pencil class="w-5 h-5 text-white" />
           </div>
@@ -337,8 +363,8 @@
           </div>
         </div>
 
-        <form @submit.prevent="submitEdit" class="p-5 space-y-5" novalidate>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form @submit.prevent="submitEdit" class="p-5 flex-1 flex flex-col min-h-0 overflow-hidden" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto flex-1 pr-1 custom-scrollbar">
             <!-- Nama -->
             <div class="space-y-1.5 col-span-1">
               <label for="edit-name" class="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-widest">Nama Lengkap <span class="text-red-500 font-bold">*</span></label>
@@ -386,21 +412,20 @@
             </div>
           </div>
 
-          <div class="flex gap-3 pt-4">
-            <Button type="button" variant="outline" class="flex-1 rounded-xl py-6 font-bold tracking-wide border-gray-100 dark:border-zinc-800 text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200" @click="isEditModalOpen = false" :disabled="isUpdating">Batal</Button>
-            <Button type="submit" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white rounded-xl py-6 font-bold shadow-lg shadow-amber-500/20 gap-2 transition-all active:scale-95" :disabled="isUpdating || !editForm.name || !editForm.phone_number">
+          <div class="flex flex-col-reverse sm:flex-row gap-3 pt-6 flex-shrink-0">
+            <Button type="button" variant="outline" class="flex-1 rounded-xl h-12 sm:py-6 font-bold tracking-wide border-gray-100 dark:border-zinc-800 text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 transition-all" @click="isEditModalOpen = false" :disabled="isUpdating">Batal</Button>
+            <Button type="submit" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white rounded-xl h-12 sm:py-6 font-bold shadow-lg shadow-amber-500/20 gap-2 transition-all active:scale-95" :disabled="isUpdating || !editForm.name || !editForm.phone_number">
               <Loader2 v-if="isUpdating" class="w-4 h-4 animate-spin text-white" />
               <Pencil v-else class="w-4 h-4 text-white/50" />
-              {{ isUpdating ? 'Memperbarui...' : 'Simpan Perubahan' }}
+              {{ isUpdating ? 'Memperbarui...' : 'Simpan' }}
             </Button>
           </div>
         </form>
       </DialogContent>
     </Dialog>
 
-    <!-- Delete Confirmation Dialog -->
     <AlertDialog :open="isDeleteDialogOpen" @update:open="isDeleteDialogOpen = $event">
-      <AlertDialogContent class="bg-white dark:bg-zinc-900 border-gray-100 dark:border-zinc-800 rounded-2xl shadow-2xl">
+      <AlertDialogContent class="max-w-[95vw] sm:max-w-md bg-white dark:bg-zinc-900 border-gray-100 dark:border-zinc-800 rounded-2xl shadow-2xl">
         <AlertDialogHeader>
           <AlertDialogTitle class="text-[17px] font-bold text-gray-900 dark:text-white tracking-tight">Hapus Pelanggan Selamanya?</AlertDialogTitle>
           <AlertDialogDescription class="text-[13px] font-medium text-gray-500 dark:text-zinc-400">Tindakan ini tidak dapat dibatalkan. Riwayat transaksi mungkin akan terdampak di laporan akhir.</AlertDialogDescription>
