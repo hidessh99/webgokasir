@@ -34,9 +34,6 @@ EXPOSE 3000
 ENV HOST=0.0.0.0
 ENV PORT=3000
 ENV NODE_ENV=production
-ENV NUXT_PUBLIC_API_BASE=http://localhost:3020
-ENV NUXT_PUBLIC_APP_WEB=GO Kasir
-ENV NUXT_PUBLIC_APP_NAME=GO Kasir
 
 # Run the application
 CMD ["node", ".output/server/index.mjs"]
