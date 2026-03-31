@@ -303,15 +303,33 @@
               </div>
             </div>
 
-            <!-- Image URL -->
-            <div class="col-span-1 sm:col-span-2 space-y-1.5">
-              <label class="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-widest">URL Gambar Produk</label>
-              <div class="flex gap-2">
-                <input v-model="createForm.image" type="text" class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-[12px] font-medium text-gray-800 dark:text-gray-100 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" placeholder="https://domain.com/gambar.jpg" />
-                <div class="w-11 h-11 bg-gray-50 dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-zinc-700 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
-                   <img v-if="createForm.image" :src="createForm.image" class="w-full h-full object-cover" />
-                   <ImageIcon v-else class="w-4 h-4 text-gray-300 dark:text-zinc-600" />
+            <!-- Image Upload -->
+            <div class="col-span-1 sm:col-span-2 space-y-2">
+              <label class="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-widest">Gambar Produk</label>
+              <div class="group relative w-full aspect-video sm:aspect-auto sm:h-32 rounded-2xl border-2 border-dashed border-gray-200 dark:border-zinc-800 hover:border-indigo-400 dark:hover:border-indigo-500 bg-gray-50/50 dark:bg-zinc-800/30 transition-all overflow-hidden flex flex-col items-center justify-center cursor-pointer" @click="createFileInput?.click()">
+                <img v-if="createForm.image" :src="createForm.image" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                
+                <div v-if="isUploadingImage" class="absolute inset-0 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm flex flex-col items-center justify-center z-10">
+                  <Loader2 class="w-6 h-6 animate-spin text-indigo-500 mb-2" />
+                  <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">Mengunggah...</span>
                 </div>
+
+                <div v-else-if="!createForm.image" class="flex flex-col items-center gap-2 text-gray-400 group-hover:text-indigo-500 transition-colors">
+                  <Plus class="w-6 h-6 opacity-50" />
+                  <span class="text-[11px] font-bold uppercase tracking-widest">Klik untuk Upload</span>
+                </div>
+                
+                <div v-else class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-4">
+                  <div class="flex flex-col items-center gap-2">
+                    <span class="text-white text-[10px] font-bold uppercase tracking-widest bg-white/20 px-4 py-2 rounded-xl backdrop-blur-md border border-white/30 hover:bg-white/30 transition-colors">Ganti Gambar</span>
+                    <button type="button" @click.stop="createForm.image = ''" class="text-white/80 hover:text-white text-[9px] font-bold uppercase tracking-widest flex items-center gap-1 transition-colors">
+                      <Trash2 class="w-3 h-3" />
+                      Hapus Gambar
+                    </button>
+                  </div>
+                </div>
+
+                <input type="file" ref="createFileInput" class="hidden" accept="image/*" @change="e => handleImageUpload(e, 'create')" />
               </div>
             </div>
 
@@ -388,15 +406,33 @@
               </div>
             </div>
 
-            <!-- Image URL -->
-            <div class="col-span-1 sm:col-span-2 space-y-1.5">
-              <label class="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-widest">URL Gambar Produk</label>
-              <div class="flex gap-2">
-                <input v-model="editForm.image" type="text" class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-[12px] font-medium text-gray-800 dark:text-gray-100 focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all" />
-                <div class="w-11 h-11 bg-gray-50 dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-zinc-700 flex items-center justify-center shrink-0 overflow-hidden shadow-inner">
-                   <img v-if="editForm.image" :src="editForm.image" class="w-full h-full object-cover" />
-                   <ImageIcon v-else class="w-4 h-4 text-gray-200 dark:text-zinc-700" />
+            <!-- Image Upload -->
+            <div class="col-span-1 sm:col-span-2 space-y-2">
+              <label class="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-widest">Gambar Produk</label>
+              <div class="group relative w-full aspect-video sm:aspect-auto sm:h-32 rounded-2xl border-2 border-dashed border-gray-200 dark:border-zinc-800 hover:border-amber-400 dark:hover:border-amber-500 bg-gray-50/50 dark:bg-zinc-800/30 transition-all overflow-hidden flex flex-col items-center justify-center cursor-pointer" @click="editFileInput?.click()">
+                <img v-if="editForm.image" :src="editForm.image" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                
+                <div v-if="isUploadingImage" class="absolute inset-0 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm flex flex-col items-center justify-center z-10">
+                  <Loader2 class="w-6 h-6 animate-spin text-amber-500 mb-2" />
+                  <span class="text-[10px] font-bold text-amber-500 uppercase tracking-widest">Mengunggah...</span>
                 </div>
+
+                <div v-else-if="!editForm.image" class="flex flex-col items-center gap-2 text-gray-400 group-hover:text-amber-500 transition-colors">
+                  <Plus class="w-6 h-6 opacity-50" />
+                  <span class="text-[11px] font-bold uppercase tracking-widest">Klik untuk Upload</span>
+                </div>
+                
+                <div v-else class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-4">
+                  <div class="flex flex-col items-center gap-2">
+                    <span class="text-white text-[10px] font-bold uppercase tracking-widest bg-white/20 px-4 py-2 rounded-xl backdrop-blur-md border border-white/30 hover:bg-white/30 transition-colors">Ganti Gambar</span>
+                    <button type="button" @click.stop="editForm.image = ''" class="text-white/80 hover:text-white text-[9px] font-bold uppercase tracking-widest flex items-center gap-1 transition-colors">
+                      <Trash2 class="w-3 h-3" />
+                      Hapus Gambar
+                    </button>
+                  </div>
+                </div>
+
+                <input type="file" ref="editFileInput" class="hidden" accept="image/*" @change="e => handleImageUpload(e, 'edit')" />
               </div>
             </div>
 
@@ -480,6 +516,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { getMenus, getMenuById, createMenu, updateMenu, deleteMenu, type MenuItem } from '@/server/api/public/menu'
 import { getCategories, type CategoryItem } from '@/server/api/public/category'
+import { uploadFile } from '@/server/api/public/upload'
 import { alertSuccess, alertError } from '@/lib/alert'
 
 definePageMeta({ layout: 'dashboard' })
@@ -546,6 +583,11 @@ const editForm = ref({
 // Delete Dialog State
 const isDeleteDialogOpen = ref(false)
 const deleteMenuId = ref<string | number | null>(null)
+
+// Image Upload State
+const isUploadingImage = ref(false)
+const createFileInput = ref<HTMLInputElement | null>(null)
+const editFileInput = ref<HTMLInputElement | null>(null)
 
 // ─── Helper ────────────────────────────────────────────────────────────────
 const formatPrice = (price: number) => {
@@ -621,6 +663,44 @@ onMounted(() => {
   fetchMenus()
   fetchMasterData()
 })
+
+// ─── Image Upload ───────────────────────────────────────────────────────
+const handleImageUpload = async (event: Event, formType: 'create' | 'edit') => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
+
+  // Validate file type
+  if (!file.type.startsWith('image/')) {
+    alertError('File harus berupa gambar.')
+    return
+  }
+
+  isUploadingImage.value = true
+  try {
+    const token = localStorage.getItem('token') || ''
+    const response = await uploadFile(file, token)
+    const result = await response.json()
+
+    if (response.ok && result.success) {
+      if (formType === 'create') {
+        createForm.value.image = result.payload.url
+      } else {
+        editForm.value.image = result.payload.url
+      }
+      alertSuccess('Gambar berhasil diunggah.')
+    } else {
+      alertError(result.message || 'Gagal mengunggah gambar.')
+    }
+  } catch (error) {
+    console.error('Error uploading image:', error)
+    alertError('Terjadi kesalahan koneksi saat mengunggah gambar.')
+  } finally {
+    isUploadingImage.value = false
+    // Reset input
+    target.value = ''
+  }
+}
 
 // ─── Detail ─────────────────────────────────────────────────────────────────
 const openMenuDetail = async (id: string | number) => {
