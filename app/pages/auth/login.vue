@@ -25,7 +25,7 @@
                 id="email" 
                 v-model="form.email"
                 type="email" 
-                placeholder="halo@bisnisanda.com" 
+                placeholder="halo@gmail.com.com" 
                 class="bg-white border-zinc-200 text-black focus-visible:ring-zinc-400 placeholder:text-zinc-400 rounded-lg"
                 required
               />

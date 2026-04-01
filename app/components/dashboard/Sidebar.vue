@@ -488,15 +488,25 @@
             </NuxtLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
+
+                    <!-- Staff -->
+          <SidebarMenuItem>
+            <SidebarMenuButton as-child tooltip="Staff">
+            <NuxtLink to="/employer/staff">
+              <LayoutGrid class="h-4 w-4" />
+              <span>Staff</span>
+            </NuxtLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <!-- month  with submenu -->
 
           <!-- always  with submenu -->
           <SidebarMenuItem>
-            <Collapsible v-model:open="SellersvralwaysOpen" class="group/collapsible">
+            <Collapsible v-model:open="ProdukOpen" class="group/collapsible">
               <CollapsibleTrigger as-child>
                 <SidebarMenuButton>
                   <Server class="h-4 w-4" />
-                  <span>AlwaysOn</span>
+                  <span>Produk</span>
                   <ChevronDown
                     class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
                   />
@@ -504,7 +514,7 @@
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in SellerSvralwaysItems" :key="item.title">
+                  <SidebarMenuSubItem v-for="item in ProdukItems" :key="item.title">
                     <SidebarMenuSubButton as-child>
                       <NuxtLink :to="item.url">
                         <span>{{ item.title }}</span>
@@ -682,6 +692,12 @@ import { useLocalStorage } from '@vueuse/core'
 import { onMounted } from 'vue'
 import { alertError } from '../../lib/alert'
 
+// gokasir 
+
+const ProdukOpen = ref(false)
+
+// gokasir 
+
 // Reactive state for collapsible menus
 
 const CommunityOpen = ref(false)
@@ -819,14 +835,14 @@ const CostumerItems = [
 
 ]
 
-const SellerSvralwaysItems = [
+const ProdukItems = [
   {
-    title: 'Servers',
-    url: '/sellers/server/always',
+    title: 'Supplier',
+    url: '/employer/supplier',
   },
   {
     title: 'Accounts',
-    url: '/sellers/server/always/account',
+    url: '/employer/accounts',
   },
 
 ]

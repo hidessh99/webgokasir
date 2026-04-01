@@ -41,6 +41,19 @@
               />
             </div>
 
+            <!-- Company Name -->
+            <div class="space-y-1.5">
+              <Label for="company_name" class="text-xs font-bold text-zinc-700 uppercase tracking-wider">Nama Bisnis / Toko</Label>
+              <Input 
+                id="company_name" 
+                v-model="form.company_name"
+                type="text" 
+                placeholder="Contoh: Toko Berkah" 
+                class="bg-white border-zinc-200 text-black focus-visible:ring-zinc-400 placeholder:text-zinc-400 rounded-xl"
+                required
+              />
+            </div>
+
             <!-- Email -->
             <div class="space-y-1.5">
               <Label for="email" class="text-xs font-bold text-zinc-700 uppercase tracking-wider">Alamat Email</Label>
@@ -48,7 +61,7 @@
                 id="email" 
                 v-model="form.email"
                 type="email" 
-                placeholder="nama@bisnisanda.com" 
+                placeholder="nama@gmail.com" 
                 class="bg-white border-zinc-200 text-black focus-visible:ring-zinc-400 placeholder:text-zinc-400 rounded-xl"
                 required
               />
@@ -153,6 +166,7 @@ const form = ref({
   name: '',
   email: '',
   phone_number: '',
+  company_name: '',
   password: ''
 })
 

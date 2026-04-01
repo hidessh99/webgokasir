@@ -28,6 +28,9 @@ export default defineNuxtConfig({
         'clsx',
         'tailwind-merge',
         'sweetalert2',
+        'jspdf',
+        'jspdf-autotable',
+        'xlsx',
       ]
     }
   },  runtimeConfig: {

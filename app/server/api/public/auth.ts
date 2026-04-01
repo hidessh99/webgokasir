@@ -1,19 +1,20 @@
-export const userRegister = async ({ email, password, name, phone_number }: { email: string, password: string, name: string, phone_number: string }) => {
+export const userRegister = async (data: { email: string, password: string, name: string, phone_number: string, company_name: string }) => {
   const config = useRuntimeConfig()
   const baseUrl = config.public.baseUrl
+
+  const formData = new FormData()
+  formData.append('email', data.email)
+  formData.append('password', data.password)
+  formData.append('name', data.name)
+  formData.append('company_name', data.company_name)
+  formData.append('phone_number', data.phone_number)
 
   return await fetch(`${baseUrl}/api/auth/register`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
-    body: JSON.stringify({
-      email,
-      password,
-      name,
-      phone_number,
-    }),
+    body: formData,
   })
 }
 
