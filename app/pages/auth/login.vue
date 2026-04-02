@@ -25,7 +25,7 @@
                 id="email" 
                 v-model="form.email"
                 type="email" 
-                placeholder="halo@gmail.com.com" 
+                placeholder="halo@gmail.com" 
                 class="bg-white border-zinc-200 text-black focus-visible:ring-zinc-400 placeholder:text-zinc-400 rounded-lg"
                 required
               />
@@ -153,7 +153,9 @@ const showPassword = ref(false)
 
 // Session storage using VueUse
 const token = useLocalStorage('token', null)
-const role = useLocalStorage('user_role', null)
+const role = useLocalStorage('role', null)
+const name = useLocalStorage('name', null)
+const email = useLocalStorage('email', null)
 const tokenType = useLocalStorage('token_type', 'Bearer')
 
 const handleLogin = async () => {
@@ -166,6 +168,8 @@ const handleLogin = async () => {
       if (result.payload) {
         token.value = result.payload.token || null
         role.value = result.payload.role || null
+        name.value = result.payload.name || null
+        email.value = result.payload.email || null
         tokenType.value = result.payload.token_type || 'Bearer'
       }
 

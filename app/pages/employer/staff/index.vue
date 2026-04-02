@@ -1,74 +1,59 @@
 <template>
   <div class="p-4 sm:p-6 space-y-6">
 
-    <!-- Main Section -->
-    <div class="bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 rounded-2xl shadow-sm">
-      <!-- Header -->
-      <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-semibold text-indigo-600 dark:text-indigo-400">Manajemen Staff</h2>
-          <p class="text-xs text-gray-500 dark:text-zinc-400 mt-0.5">Kelola dan lihat semua staff/employer dalam sistem</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="flex items-center gap-1 bg-gray-50 dark:bg-zinc-800/50 border border-gray-100 dark:border-zinc-800 rounded-xl p-1 mr-1">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              class="h-9 w-9 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-              title="Export PDF"
-              @click="exportToPDF"
-            >
-              <FileText class="w-[18px] h-[18px]" />
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              class="h-9 w-9 rounded-lg text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
-              title="Export Excel"
-              @click="exportToExcel"
-            >
-              <FileSpreadsheet class="w-[18px] h-[18px]" />
-            </Button>
-          </div>
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <h2 class="text-lg font-semibold text-indigo-600 dark:text-indigo-400">Manajemen Staff</h2>
+        <p class="text-xs text-gray-500 dark:text-zinc-400 mt-0.5">Kelola dan lihat semua staff/employer dalam sistem</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 rounded-xl p-1 shadow-sm">
           <Button 
-            id="btn-tambah-staff"
-            class="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 h-11 px-5 rounded-xl shadow-lg shadow-indigo-500/20"
-            @click="openCreateModal"
+            variant="ghost" 
+            size="icon" 
+            class="h-9 w-9 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            title="Export PDF"
+            @click="exportToPDF"
           >
-            <Plus class="w-4 h-4" />
-            Tambah Staff
+            <FileText class="w-[18px] h-[18px]" />
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            class="h-9 w-9 rounded-lg text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+            title="Export Excel"
+            @click="exportToExcel"
+          >
+            <FileSpreadsheet class="w-[18px] h-[18px]" />
           </Button>
         </div>
+        <Button 
+          id="btn-tambah-staff"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 h-11 px-5 rounded-xl shadow-lg shadow-indigo-500/20"
+          @click="openCreateModal"
+        >
+          <Plus class="w-4 h-4" />
+          Tambah Staff
+        </Button>
       </div>
+    </div>
 
-      <Separator class="bg-gray-100 dark:bg-zinc-800/60" />
-
-      <!-- Toolbar -->
-      <div class="p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="relative w-full sm:max-w-xs">
-          <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input 
-            id="search-staff"
-            v-model="searchQuery"
-            placeholder="Cari staff..." 
-            class="pl-9 bg-white dark:bg-zinc-900/50 border border-gray-200 dark:border-zinc-700 rounded-lg h-9 w-full text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-500 transition-all font-medium"
-          />
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger as-child>
-            <Button variant="outline" class="w-full sm:w-auto h-9 gap-2 border-gray-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-gray-700 dark:text-zinc-300 bg-white dark:bg-zinc-900">
-              Kolom
-              <ChevronDown class="w-4 h-4 opacity-50" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuCheckboxItem checked>Nama</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem checked>Email</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem checked>Deskripsi</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem checked>Tanggal</DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+    <!-- Toolbar -->
+    <div class="bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 rounded-2xl shadow-sm p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="relative w-full sm:max-w-xs">
+        <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <input 
+          id="search-staff"
+          v-model="searchQuery"
+          placeholder="Cari staff dari nama..." 
+          class="pl-9 bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 rounded-lg h-9 w-full text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-500 transition-all font-medium"
+        />
       </div>
+    </div>
+
+    <!-- Main Section -->
+    <div class="bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden">
 
       <!-- Table Section (Desktop) -->
       <div class="px-4 pb-4 overflow-x-auto hidden md:block">
@@ -88,9 +73,9 @@
                     <ChevronsUpDown class="w-[10px] h-[10px] text-gray-400" />
                   </div>
                 </TableHead>
-                <TableHead class="text-xs text-gray-500 dark:text-zinc-400 font-semibold h-10 cursor-pointer hover:text-gray-900 hidden lg:table-cell">
+                <TableHead class="text-xs text-gray-500 dark:text-zinc-400 font-semibold h-10 cursor-pointer hover:text-gray-900">
                   <div class="flex items-center gap-1.5">
-                    Deskripsi
+                    Role
                     <ChevronsUpDown class="w-[10px] h-[10px] text-gray-400" />
                   </div>
                 </TableHead>
@@ -139,17 +124,21 @@
                     </div>
                     <div>
                       <span class="text-[13px] font-semibold text-gray-900 dark:text-gray-100 block truncate max-w-[150px] sm:max-w-none">{{ staff.name }}</span>
-                      <div class="flex flex-col md:hidden mt-0.5">
-                        <span class="text-[11px] text-gray-400 truncate max-w-[140px]">{{ staff.email }}</span>
-                      </div>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell class="text-[13px] text-gray-500 dark:text-zinc-400 py-2.5 hidden md:table-cell font-medium">
                   {{ staff.email }}
                 </TableCell>
-                <TableCell class="text-[13px] text-gray-500 dark:text-zinc-400 py-2.5 hidden lg:table-cell font-medium max-w-[200px] truncate">
-                  {{ staff.description || '-' }}
+                <TableCell class="py-2.5">
+                  <Badge variant="secondary" :class="[
+                    'text-[10px] font-bold uppercase px-2 py-0.5 rounded-md border-0',
+                    staff.role === 'admin' ? 'bg-indigo-500/10 text-indigo-500' : 
+                    staff.role === 'warehouse' ? 'bg-amber-500/10 text-amber-500' : 
+                    'bg-emerald-500/10 text-emerald-500'
+                  ]">
+                    {{ staff.role || 'user' }}
+                  </Badge>
                 </TableCell>
                 <TableCell class="text-[13px] text-gray-500 dark:text-zinc-400 py-2.5 hidden sm:table-cell font-medium">{{ staff.created_at || '-' }}</TableCell>
 
@@ -162,13 +151,6 @@
                       title="Lihat Detail"
                     >
                       <Eye class="w-[15px] h-[15px]" />
-                    </button>
-                    <button 
-                      @click.stop="openEditModal(staff)" 
-                      class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 dark:text-zinc-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-all hover:text-amber-600 dark:hover:text-amber-400 active:scale-95"
-                      title="Edit"
-                    >
-                      <Pencil class="w-[15px] h-[15px]" />
                     </button>
                     <button 
                       @click.stop="confirmDelete(staff.id)" 
@@ -214,7 +196,17 @@
                 {{ staff.name.charAt(0).toUpperCase() }}
               </div>
               <div class="min-w-0 pr-8">
-                <h4 class="text-[13px] font-bold text-gray-900 dark:text-white truncate leading-tight">{{ staff.name }}</h4>
+                <div class="flex items-center gap-2">
+                  <h4 class="text-[13px] font-bold text-gray-900 dark:text-white truncate leading-tight">{{ staff.name }}</h4>
+                  <Badge variant="secondary" :class="[
+                    'text-[8px] font-black uppercase px-1 py-0 rounded border-0',
+                    staff.role === 'admin' ? 'bg-indigo-500/10 text-indigo-500' : 
+                    staff.role === 'warehouse' ? 'bg-amber-500/10 text-amber-500' : 
+                    'bg-emerald-500/10 text-emerald-500'
+                  ]">
+                    {{ staff.role || 'user' }}
+                  </Badge>
+                </div>
                 <div class="flex items-center gap-1.5 mt-0.5">
                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
                    <p class="text-[11px] font-medium text-gray-500 dark:text-zinc-400">{{ staff.email }}</p>
@@ -241,14 +233,6 @@
 
           <!-- Bottom Actions -->
           <div class="flex gap-2.5 mt-4 pt-4 border-t border-gray-50 dark:border-zinc-800/60 relative z-10">
-             <Button 
-               variant="outline" 
-               class="flex-1 h-10 rounded-xl border-amber-200 dark:border-amber-900/30 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 text-xs font-bold gap-2"
-               @click.stop="openEditModal(staff)"
-             >
-               <Pencil class="w-3.5 h-3.5" />
-               Edit Staff
-             </Button>
              <Button 
                variant="outline" 
                class="flex-1 h-10 rounded-xl border-red-200 dark:border-red-900/30 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 text-xs font-bold gap-2"
@@ -333,7 +317,9 @@
                   <span class="text-[9px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-tighter">Akun Email</span>
                 </div>
                 <p class="text-[13px] font-black text-gray-800 dark:text-white leading-none truncate">{{ selectedStaff.email }}</p>
-                <p class="text-[11px] font-bold text-gray-400 dark:text-zinc-500 mt-1">Staff Aktif</p>
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="text-[11px] font-bold text-gray-400 dark:text-zinc-500">Staff Aktif</span>
+                </div>
               </div>
 
               <div class="space-y-2 p-4 rounded-2xl bg-gray-50/50 dark:bg-zinc-800/30 border border-gray-50 dark:border-zinc-800/50">
@@ -342,15 +328,33 @@
                   <span class="text-[9px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-tighter">Tanggal Bergabung</span>
                 </div>
                 <p class="text-[13px] font-black text-gray-800 dark:text-white leading-none">{{ selectedStaff.created_at || '-' }}</p>
-                <p class="text-[11px] font-bold text-gray-400 dark:text-zinc-500 mt-1">Sistem ERP</p>
+                <span class="text-[11px] font-bold text-gray-400 dark:text-zinc-500 mt-1 block">GoKasir ERP</span>
               </div>
 
-              <div class="sm:col-span-2 space-y-2 p-4 rounded-2xl bg-gray-50/50 dark:bg-zinc-800/30 border border-gray-50 dark:border-zinc-800/50">
+              <div class="space-y-2 p-4 rounded-2xl bg-gray-50/50 dark:bg-zinc-800/30 border border-gray-50 dark:border-zinc-800/50">
+                <div class="flex items-center gap-2 mb-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                  <span class="text-[9px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-tighter">Peran / Role</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <Badge variant="secondary" :class="[
+                    'text-[11px] font-black uppercase px-2 py-0.5 rounded-md border-0',
+                    selectedStaff.role === 'admin' ? 'bg-indigo-500/10 text-indigo-500' : 
+                    selectedStaff.role === 'warehouse' ? 'bg-amber-500/10 text-amber-500' : 
+                    'bg-emerald-500/10 text-emerald-500'
+                  ]">
+                    {{ selectedStaff.role || 'User' }}
+                  </Badge>
+                </div>
+              </div>
+
+              <div class="space-y-2 p-4 rounded-2xl bg-gray-50/50 dark:bg-zinc-800/30 border border-gray-50 dark:border-zinc-800/50">
                 <div class="flex items-center gap-2 mb-1">
                   <div class="w-1.5 h-1.5 rounded-full bg-rose-500"></div>
-                  <span class="text-[9px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-tighter">Deskripsi Tugas</span>
+                  <span class="text-[9px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-tighter">Auth ID</span>
                 </div>
-                <p class="text-[13px] font-semibold text-gray-800 dark:text-zinc-300 leading-relaxed">{{ selectedStaff.description || 'Tidak ada deskripsi tugas.' }}</p>
+                <p class="text-[13px] font-black text-gray-800 dark:text-white leading-none truncate">{{ selectedStaff.auth_id || '-' }}</p>
+                <span class="text-[11px] font-bold text-gray-400 dark:text-zinc-500 mt-1 block tracking-tighter">System ID</span>
               </div>
             </div>
 
@@ -554,8 +558,6 @@
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="cashier">Cashier</SelectItem>
-                    <SelectItem value="warehouse">Warehouse</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -657,7 +659,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import {
-  Search, ChevronDown, ChevronsUpDown,
+  Search, ChevronsUpDown,
   Eye, Pencil, Trash2, Loader2, Plus, UserSquare2, User2,
   FileText, FileSpreadsheet
 } from 'lucide-vue-next'
@@ -670,12 +672,6 @@ import {
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import {
   Table,
   TableBody,

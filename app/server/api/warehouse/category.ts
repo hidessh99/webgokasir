@@ -1,28 +1,20 @@
-export interface CreateSupplierPayload {
-  name: string
-  company_name?: string
-  phone_number?: string
-  email?: string
-  address?: string
-  note?: string
-}
-
-export interface SupplierItem {
+export interface CategoryItem {
   id: string
   name: string
-  company_name?: string
-  phone_number: string
-  email: string
-  address: string
-  note: string
+  description: string
   created_at: string
 }
 
+export interface CreateCategoryPayload {
+  name: string
+  description: string
+}
+
 /**
- * GET /warehouse/supplier
- * Ambil daftar semua supplier
+ * GET /warehouse/category
+ * Get all categories with pagination and search
  */
-export const getSuppliers = async (token: string, page: number = 1, pageSize: number = 10, search: string = '') => {
+export const getCategories = async (token: string, page: number = 1, pageSize: number = 10, search: string = '') => {
   const config = useRuntimeConfig()
   const baseUrl = config.public.baseUrl
 
@@ -33,7 +25,7 @@ export const getSuppliers = async (token: string, page: number = 1, pageSize: nu
     params.append('search', search)
   }
 
-  return await fetch(`${baseUrl}/warehouse/supplier?${params.toString()}`, {
+  return await fetch(`${baseUrl}/warehouse/category?${params.toString()}`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -43,14 +35,14 @@ export const getSuppliers = async (token: string, page: number = 1, pageSize: nu
 }
 
 /**
- * GET /warehouse/supplier/:id
- * Ambil detail satu supplier berdasarkan ID
+ * GET /warehouse/category/:id
+ * Get detail of one category
  */
-export const getSupplierById = async (id: string, token: string) => {
+export const getCategoryById = async (id: string, token: string) => {
   const config = useRuntimeConfig()
   const baseUrl = config.public.baseUrl
 
-  return await fetch(`${baseUrl}/warehouse/supplier/${id}`, {
+  return await fetch(`${baseUrl}/warehouse/category/${id}`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -60,14 +52,14 @@ export const getSupplierById = async (id: string, token: string) => {
 }
 
 /**
- * POST /warehouse/supplier
- * Tambah supplier baru
+ * POST /warehouse/category
+ * Create a new category
  */
-export const createSupplier = async (payload: CreateSupplierPayload, token: string) => {
+export const createCategory = async (payload: CreateCategoryPayload, token: string) => {
   const config = useRuntimeConfig()
   const baseUrl = config.public.baseUrl
 
-  return await fetch(`${baseUrl}/warehouse/supplier`, {
+  return await fetch(`${baseUrl}/warehouse/category`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -79,14 +71,14 @@ export const createSupplier = async (payload: CreateSupplierPayload, token: stri
 }
 
 /**
- * PUT /warehouse/supplier/:id
- * Perbarui data supplier
+ * PUT /warehouse/category/:id
+ * Update an existing category
  */
-export const updateSupplier = async (id: string, payload: Partial<CreateSupplierPayload>, token: string) => {
+export const updateCategory = async (id: string, payload: Partial<CreateCategoryPayload>, token: string) => {
   const config = useRuntimeConfig()
   const baseUrl = config.public.baseUrl
 
-  return await fetch(`${baseUrl}/warehouse/supplier/${id}`, {
+  return await fetch(`${baseUrl}/warehouse/category/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -98,14 +90,14 @@ export const updateSupplier = async (id: string, payload: Partial<CreateSupplier
 }
 
 /**
- * DELETE /warehouse/supplier/:id
- * Hapus supplier
+ * DELETE /warehouse/category/:id
+ * Delete a category
  */
-export const deleteSupplier = async (id: string, token: string) => {
+export const deleteCategory = async (id: string, token: string) => {
   const config = useRuntimeConfig()
   const baseUrl = config.public.baseUrl
 
-  return await fetch(`${baseUrl}/warehouse/supplier/${id}`, {
+  return await fetch(`${baseUrl}/warehouse/category/${id}`, {
     method: 'DELETE',
     headers: {
       'Accept': 'application/json',

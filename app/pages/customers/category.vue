@@ -564,12 +564,25 @@ const appName = String(config.public.APP_NAME || 'GoKasir')
 const url = useRequestURL()
 
 useSeoMeta({
-  title: 'Kategori Pelanggan',
-  ogTitle: 'Kategori Pelanggan',
-  description: `Kelola kategori pelanggan bisnis Anda secara terorganisir di ${appName}.`,
-  ogDescription: `Kelola kategori pelanggan bisnis Anda secara terorganisir di ${appName}.`,
+  title: `Kategori Pelanggan | ${appName} - Manajemen CRM Terpadu`,
+  ogTitle: `Kategori Pelanggan | ${appName} Dashboard`,
+  description: `Optimalkan manajemen data Anda dengan fitur Kategori Pelanggan di ${appName}. Kelola, kelompokkan, dan pantau segmentasi pelanggan bisnis Anda secara efisien dan terorganisir dalam satu dashboard canggih.`,
+  ogDescription: `Ringkasan manajemen kategori pelanggan di ${appName}. Segmentasikan pelanggan Anda secara profesional untuk meningkatkan efisiensi operasional dan layanan bisnis.`,
   ogUrl: url.href,
+  ogType: 'website',
+  ogLocale: 'id_ID',
+  ogSiteName: appName,
   twitterCard: 'summary_large_image',
+  twitterTitle: `Kategori Pelanggan - ${appName}`,
+  twitterDescription: `Kelola segmentasi pelanggan bisnis Anda dengan sistem kategori cerdas dari ${appName}.`,
+  author: 'GoKasir Team',
+  robots: 'index, follow',
+})
+
+useHead({
+  link: [
+    { rel: 'canonical', href: url.href }
+  ]
 })
 
 // ─── State ─────────────────────────────────────────────────────────────────

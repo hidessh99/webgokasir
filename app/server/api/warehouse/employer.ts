@@ -1,5 +1,6 @@
 export interface EmployerItem {
   id: string
+  auth_id?: string
   name: string
   description?: string
   email: string

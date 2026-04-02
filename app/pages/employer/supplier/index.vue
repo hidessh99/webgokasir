@@ -1,74 +1,59 @@
 <template>
   <div class="p-4 sm:p-6 space-y-6">
 
-    <!-- Main Section -->
-    <div class="bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 rounded-2xl shadow-sm">
-      <!-- Header -->
-      <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-semibold text-indigo-600 dark:text-indigo-400">Manajemen Supplier</h2>
-          <p class="text-xs text-gray-500 dark:text-zinc-400 mt-0.5">Kelola dan lihat semua supplier dalam sistem</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="flex items-center gap-1 bg-gray-50 dark:bg-zinc-800/50 border border-gray-100 dark:border-zinc-800 rounded-xl p-1 mr-1">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              class="h-9 w-9 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-              title="Export PDF"
-              @click="exportToPDF"
-            >
-              <FileText class="w-[18px] h-[18px]" />
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              class="h-9 w-9 rounded-lg text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
-              title="Export Excel"
-              @click="exportToExcel"
-            >
-              <FileSpreadsheet class="w-[18px] h-[18px]" />
-            </Button>
-          </div>
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <h2 class="text-lg font-semibold text-indigo-600 dark:text-indigo-400">Manajemen Supplier</h2>
+        <p class="text-xs text-gray-500 dark:text-zinc-400 mt-0.5">Kelola dan lihat semua supplier dalam sistem</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 rounded-xl p-1 shadow-sm">
           <Button 
-            id="btn-tambah-supplier"
-            class="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 h-11 px-5 rounded-xl shadow-lg shadow-indigo-500/20"
-            @click="openCreateModal"
+            variant="ghost" 
+            size="icon" 
+            class="h-9 w-9 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            title="Export PDF"
+            @click="exportToPDF"
           >
-            <Plus class="w-4 h-4" />
-            Tambah Supplier
+            <FileText class="w-[18px] h-[18px]" />
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            class="h-9 w-9 rounded-lg text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+            title="Export Excel"
+            @click="exportToExcel"
+          >
+            <FileSpreadsheet class="w-[18px] h-[18px]" />
           </Button>
         </div>
+        <Button 
+          id="btn-tambah-supplier"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 h-11 px-5 rounded-xl shadow-lg shadow-indigo-500/20"
+          @click="openCreateModal"
+        >
+          <Plus class="w-4 h-4" />
+          Tambah Supplier
+        </Button>
       </div>
+    </div>
 
-      <Separator class="bg-gray-100 dark:bg-zinc-800/60" />
-
-      <!-- Toolbar -->
-      <div class="p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="relative w-full sm:max-w-xs">
-          <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input 
-            id="search-supplier"
-            v-model="searchQuery"
-            placeholder="Cari supplier..." 
-            class="pl-9 bg-white dark:bg-zinc-900/50 border border-gray-200 dark:border-zinc-700 rounded-lg h-9 w-full text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-500 transition-all font-medium"
-          />
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger as-child>
-            <Button variant="outline" class="w-full sm:w-auto h-9 gap-2 border-gray-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-gray-700 dark:text-zinc-300 bg-white dark:bg-zinc-900">
-              Kolom
-              <ChevronDown class="w-4 h-4 opacity-50" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuCheckboxItem checked>Nama</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem checked>Kontak</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem checked>Alamat</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem checked>Tanggal</DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+    <!-- Toolbar -->
+    <div class="bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 rounded-2xl shadow-sm p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="relative w-full sm:max-w-xs">
+        <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <input 
+          id="search-supplier"
+          v-model="searchQuery"
+          placeholder="Cari supplier dari nama..." 
+          class="pl-9 bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 rounded-lg h-9 w-full text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-500 transition-all font-medium"
+        />
       </div>
+    </div>
+
+    <!-- Main Section -->
+    <div class="bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden">
 
       <!-- Table Section (Desktop) -->
       <div class="px-4 pb-4 overflow-x-auto hidden md:block">
@@ -139,6 +124,7 @@
                     </div>
                     <div>
                       <span class="text-[13px] font-semibold text-gray-900 dark:text-gray-100 block truncate max-w-[150px] sm:max-w-none">{{ supplier.name }}</span>
+                      <span v-if="supplier.company_name" class="text-[11px] text-indigo-500 font-bold block truncate max-w-[150px] sm:max-w-none">{{ supplier.company_name }}</span>
                       <div class="flex flex-col md:hidden mt-0.5">
                         <span class="text-[11px] text-gray-400 truncate max-w-[140px]">{{ supplier.phone_number }}</span>
                       </div>
@@ -218,6 +204,7 @@
               </div>
               <div class="min-w-0 pr-8">
                 <h4 class="text-[13px] font-bold text-gray-900 dark:text-white truncate leading-tight">{{ supplier.name }}</h4>
+                <p v-if="supplier.company_name" class="text-[11px] font-bold text-indigo-500 truncate mt-0.5">{{ supplier.company_name }}</p>
                 <div class="flex items-center gap-1.5 mt-0.5">
                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
                    <p class="text-[11px] font-medium text-gray-500 dark:text-zinc-400">{{ supplier.phone_number || '-' }}</p>
@@ -324,6 +311,7 @@
               </div>
               <div class="space-y-1">
                 <h3 class="text-lg font-black text-gray-900 dark:text-white leading-tight">{{ selectedSupplier.name }}</h3>
+                <p v-if="selectedSupplier.company_name" class="text-sm font-bold text-indigo-500 dark:text-indigo-400">{{ selectedSupplier.company_name }}</p>
                 <span class="inline-flex px-2 px-1 rounded bg-gray-100 dark:bg-zinc-800 text-[10px] font-mono text-gray-500 font-bold uppercase tracking-widest">ID: {{ selectedSupplier.id.substring(0, 8) }}...</span>
               </div>
             </div>
@@ -400,15 +388,15 @@
           <form @submit.prevent="submitCreate" class="p-5 sm:p-6 space-y-5" novalidate>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               <!-- Nama Field -->
-              <div class="space-y-2 sm:col-span-2">
+              <div class="space-y-2">
                 <label for="create-name" class="text-[11px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest block px-0.5">
-                  Nama Supplier <span class="text-red-500 text-[10px]">*</span>
+                  Nama PIC <span class="text-red-500 text-[10px]">*</span>
                 </label>
                 <input
                   id="create-name"
                   v-model="createForm.name"
                   type="text"
-                  placeholder="Contoh: PT. Sumber Makmur"
+                  placeholder="Contoh: Susanto"
                   :class="[
                     'w-full px-4 py-3 rounded-xl border text-[13px] font-semibold outline-none transition-all shadow-sm',
                     'bg-white dark:bg-zinc-900/50 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-600',
@@ -418,18 +406,42 @@
                 <p v-if="createNameError" class="text-[11px] text-red-500 font-bold px-1">{{ createNameError }}</p>
               </div>
 
+              <!-- Company Name Field -->
+              <div class="space-y-2">
+                <label for="create-company-name" class="text-[11px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest block px-0.5">
+                  Nama Perusahaan <span class="text-red-500 text-[10px]">*</span>
+                </label>
+                <input
+                  id="create-company-name"
+                  v-model="createForm.company_name"
+                  type="text"
+                  placeholder="Contoh: PT. Sumber Makmur"
+                  :class="[
+                    'w-full px-4 py-3 rounded-xl border text-[13px] font-semibold outline-none transition-all shadow-sm',
+                    'bg-white dark:bg-zinc-900/50 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-600',
+                    createCompanyNameError ? 'border-red-400 focus:ring-4 focus:ring-red-500/10' : 'border-gray-200 dark:border-zinc-800 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500'
+                  ]"
+                />
+                <p v-if="createCompanyNameError" class="text-[11px] text-red-500 font-bold px-1">{{ createCompanyNameError }}</p>
+              </div>
+
               <!-- Phone Field -->
               <div class="space-y-2">
                 <label for="create-phone" class="text-[11px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest block px-0.5">
-                  Nomor Telepon
+                  Nomor Telepon <span class="text-red-500 text-[10px]">*</span>
                 </label>
                 <input
                   id="create-phone"
                   v-model="createForm.phone_number"
                   type="tel"
                   placeholder="0812..."
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-[13px] font-semibold text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-600 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm"
+                  :class="[
+                    'w-full px-4 py-3 rounded-xl border text-[13px] font-semibold outline-none transition-all shadow-sm',
+                    'bg-white dark:bg-zinc-900/50 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-600',
+                    createPhoneError ? 'border-red-400 focus:ring-4 focus:ring-red-500/10' : 'border-gray-200 dark:border-zinc-800 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500'
+                  ]"
                 />
+                <p v-if="createPhoneError" class="text-[11px] text-red-500 font-bold px-1">{{ createPhoneError }}</p>
               </div>
 
               <!-- Email Field -->
@@ -489,7 +501,7 @@
               <Button
                 type="submit"
                 class="order-1 sm:order-2 flex-1 bg-indigo-600 hover:bg-indigo-700 text-white gap-2.5 shadow-lg shadow-indigo-500/20 rounded-xl py-6 font-bold text-sm active:scale-[0.98] transition-all"
-                :disabled="isSubmitting || !createForm.name.trim()"
+                :disabled="isSubmitting || !createForm.name.trim() || !createForm.company_name.trim() || !createForm.phone_number.trim() || !/^\d+$/.test(createForm.phone_number.trim())"
               >
                 <Loader2 v-if="isSubmitting" class="w-4 h-4 animate-spin" />
                 <Plus v-else class="w-4 h-4" />
@@ -521,15 +533,15 @@
           <form @submit.prevent="submitEdit" class="p-5 sm:p-6 space-y-5" novalidate>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               <!-- Nama Field -->
-              <div class="space-y-2 sm:col-span-2">
+              <div class="space-y-2">
                 <label for="edit-name" class="text-[11px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest block px-0.5">
-                  Nama Supplier <span class="text-red-500 text-[10px]">*</span>
+                  Nama PIC <span class="text-red-500 text-[10px]">*</span>
                 </label>
                 <input
                   id="edit-name"
                   v-model="editForm.name"
                   type="text"
-                  placeholder="Masukkan nama supplier..."
+                  placeholder="Masukkan nama PIC..."
                   :class="[
                     'w-full px-4 py-3 rounded-xl border text-[13px] font-semibold outline-none transition-all shadow-sm',
                     'bg-white dark:bg-zinc-900/50 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-600',
@@ -539,18 +551,42 @@
                 <p v-if="editNameError" class="text-[11px] text-red-500 font-bold px-1">{{ editNameError }}</p>
               </div>
 
+              <!-- Company Name Field -->
+              <div class="space-y-2">
+                <label for="edit-company-name" class="text-[11px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest block px-0.5">
+                  Nama Perusahaan <span class="text-red-500 text-[10px]">*</span>
+                </label>
+                <input
+                  id="edit-company-name"
+                  v-model="editForm.company_name"
+                  type="text"
+                  placeholder="Masukkan nama perusahaan..."
+                  :class="[
+                    'w-full px-4 py-3 rounded-xl border text-[13px] font-semibold outline-none transition-all shadow-sm',
+                    'bg-white dark:bg-zinc-900/50 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-600',
+                    editCompanyNameError ? 'border-red-400 focus:ring-4 focus:ring-red-500/10' : 'border-gray-200 dark:border-zinc-800 focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500'
+                  ]"
+                />
+                <p v-if="editCompanyNameError" class="text-[11px] text-red-500 font-bold px-1">{{ editCompanyNameError }}</p>
+              </div>
+
               <!-- Phone Field -->
               <div class="space-y-2">
                 <label for="edit-phone" class="text-[11px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest block px-0.5">
-                  Nomor Telepon
+                  Nomor Telepon <span class="text-red-500 text-[10px]">*</span>
                 </label>
                 <input
                   id="edit-phone"
                   v-model="editForm.phone_number"
                   type="tel"
                   placeholder="0812..."
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-[13px] font-semibold text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-600 outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all shadow-sm"
+                  :class="[
+                    'w-full px-4 py-3 rounded-xl border text-[13px] font-semibold outline-none transition-all shadow-sm',
+                    'bg-white dark:bg-zinc-900/50 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-600',
+                    editPhoneError ? 'border-red-400 focus:ring-4 focus:ring-red-500/10' : 'border-gray-200 dark:border-zinc-800 focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500'
+                  ]"
                 />
+                <p v-if="editPhoneError" class="text-[11px] text-red-500 font-bold px-1">{{ editPhoneError }}</p>
               </div>
 
               <!-- Email Field -->
@@ -610,7 +646,7 @@
               <Button
                 type="submit"
                 class="order-1 sm:order-2 flex-1 bg-amber-500 hover:bg-amber-600 text-white gap-2.5 shadow-lg shadow-amber-500/20 rounded-xl py-6 font-bold text-sm active:scale-[0.98] transition-all"
-                :disabled="isUpdating || !editForm.name.trim()"
+                :disabled="isUpdating || !editForm.name.trim() || !editForm.company_name.trim() || !editForm.phone_number.trim() || !/^\d+$/.test(editForm.phone_number.trim())"
               >
                 <Loader2 v-if="isUpdating" class="w-4 h-4 animate-spin" />
                 <Pencil v-else class="w-4 h-4" />
@@ -649,18 +685,12 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import {
-  Search, ChevronDown, ChevronsUpDown,
+  Search, ChevronsUpDown,
   Eye, Pencil, Trash2, Loader2, Plus, Building2,
   FileText, FileSpreadsheet
 } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import {
   Table,
   TableBody,
@@ -722,14 +752,18 @@ const selectedSupplier = ref<SupplierItem | null>(null)
 const isCreateModalOpen = ref(false)
 const isSubmitting = ref(false)
 const createNameError = ref('')
-const createForm = ref({ name: '', phone_number: '', email: '', address: '', note: '' })
+const createCompanyNameError = ref('')
+const createPhoneError = ref('')
+const createForm = ref({ name: '', company_name: '', phone_number: '', email: '', address: '', note: '' })
 
 // Edit Modal
 const isEditModalOpen = ref(false)
 const isUpdating = ref(false)
 const editingId = ref<string | null>(null)
 const editNameError = ref('')
-const editForm = ref({ name: '', phone_number: '', email: '', address: '', note: '' })
+const editCompanyNameError = ref('')
+const editPhoneError = ref('')
+const editForm = ref({ name: '', company_name: '', phone_number: '', email: '', address: '', note: '' })
 
 // Delete Dialog
 const isDeleteDialogOpen = ref(false)
@@ -829,17 +863,39 @@ const openSupplierDetail = async (id: string) => {
 
 // ─── Create ─────────────────────────────────────────────────────────────────
 const validateCreate = () => {
+  let isValid = true
   if (!createForm.value.name.trim()) {
     createNameError.value = 'Mohon masukkan nama supplier.'
-    return false
+    isValid = false
+  } else {
+    createNameError.value = ''
   }
-  createNameError.value = ''
-  return true
+
+  if (!createForm.value.company_name.trim()) {
+    createCompanyNameError.value = 'Mohon masukkan nama perusahaan.'
+    isValid = false
+  } else {
+    createCompanyNameError.value = ''
+  }
+
+  if (!createForm.value.phone_number.trim()) {
+    createPhoneError.value = 'Mohon masukkan nomor telepon.'
+    isValid = false
+  } else if (!/^\d+$/.test(createForm.value.phone_number.trim())) {
+    createPhoneError.value = 'Nomor telepon harus berupa angka.'
+    isValid = false
+  } else {
+    createPhoneError.value = ''
+  }
+
+  return isValid
 }
 
 const openCreateModal = () => {
-  createForm.value = { name: '', phone_number: '', email: '', address: '', note: '' }
+  createForm.value = { name: '', company_name: '', phone_number: '', email: '', address: '', note: '' }
   createNameError.value = ''
+  createCompanyNameError.value = ''
+  createPhoneError.value = ''
   isCreateModalOpen.value = true
 }
 
@@ -871,20 +927,45 @@ const openEditModal = (supplier: SupplierItem) => {
   editingId.value = supplier.id
   editForm.value = {
     name: supplier.name,
+    company_name: supplier.company_name || '',
     phone_number: supplier.phone_number || '',
     email: supplier.email || '',
     address: supplier.address || '',
     note: supplier.note || '',
   }
   editNameError.value = ''
+  editCompanyNameError.value = ''
+  editPhoneError.value = ''
   isEditModalOpen.value = true
 }
 
 const submitEdit = async () => {
+  let isValid = true
   if (!editForm.value.name.trim()) {
     editNameError.value = 'Nama supplier wajib diisi.'
-    return
+    isValid = false
+  } else {
+    editNameError.value = ''
   }
+
+  if (!editForm.value.company_name.trim()) {
+    editCompanyNameError.value = 'Nama perusahaan wajib diisi.'
+    isValid = false
+  } else {
+    editCompanyNameError.value = ''
+  }
+
+  if (!editForm.value.phone_number.trim()) {
+    editPhoneError.value = 'Nomor telepon wajib diisi.'
+    isValid = false
+  } else if (!/^\d+$/.test(editForm.value.phone_number.trim())) {
+    editPhoneError.value = 'Nomor telepon harus berupa angka.'
+    isValid = false
+  } else {
+    editPhoneError.value = ''
+  }
+
+  if (!isValid) return
   if (!editingId.value) return
   isUpdating.value = true
   try {

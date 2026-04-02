@@ -67,15 +67,15 @@
             <Avatar class="h-8 w-8 rounded-lg">
               <AvatarImage src="" alt="User" />
               <AvatarFallback class="bg-gradient-to-br from-indigo-500 to-violet-600 text-white text-[11px] font-semibold rounded-lg">
-                GK
+                {{ isMounted && userName ? userName.charAt(0).toUpperCase() : 'GK' }}
               </AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" class="w-48 bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-white">
           <DropdownMenuLabel class="font-normal">
-            <p class="text-sm font-medium">GoKasir Admin</p>
-            <p class="text-xs text-gray-400 dark:text-zinc-500">admin@gokasir.com</p>
+            <p class="text-sm font-medium">{{ isMounted && userName ? userName : 'GoKasir Admin' }}</p>
+            <p class="text-xs text-gray-400 dark:text-zinc-500">{{ isMounted && userEmail ? userEmail : 'admin@gokasir.com' }}</p>
           </DropdownMenuLabel>
           <DropdownMenuSeparator class="bg-gray-100 dark:bg-zinc-800" />
           <DropdownMenuItem class="hover:bg-gray-100 dark:hover:bg-zinc-800 focus:bg-gray-100 dark:focus:bg-zinc-800 cursor-pointer gap-2 text-sm">
@@ -98,8 +98,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineComponent, h } from 'vue'
+import { computed, defineComponent, h, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useLocalStorage } from '@vueuse/core'
 import { Button } from '@/components/ui/button'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 
@@ -130,9 +131,22 @@ const notifications = [
   { id: 3, title: 'Menu Habis', desc: 'Ayam Bakar sudah habis', time: '1 jam lalu', unread: true },
 ]
 
+const token = useLocalStorage<string | null>('token', null)
+const role = useLocalStorage<string | null>('role', null)
+const userName = useLocalStorage<string | null>('name', null)
+const userEmail = useLocalStorage<string | null>('email', null)
+
+const isMounted = ref(false)
+
+onMounted(() => {
+  isMounted.value = true
+})
+
 function handleLogout() {
-  localStorage.removeItem('token')
-  localStorage.removeItem('role')
+  token.value = null
+  role.value = null
+  userName.value = null
+  userEmail.value = null
   router.push('/auth/login')
 }
 

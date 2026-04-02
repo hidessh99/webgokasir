@@ -23,16 +23,16 @@
 
     <SidebarContent>
       <!-- cashier -->
-      <SidebarGroup v-if="canAccessMemberArea">
-        <SidebarGroupLabel>Member Area</SidebarGroupLabel>
+      <SidebarGroup v-if="isMounted && canAccesscashier">
+        <SidebarGroupLabel>Cashier Area</SidebarGroupLabel>
         <SidebarMenu>
-          <!-- ServerMOnth  with submenu -->
+          <!-- Costumer with submenu -->
           <SidebarMenuItem>
-            <Collapsible v-model:open="UserMonthOpen" class="group/collapsible">
+            <Collapsible v-model:open="CostumerOpen" class="group/collapsible">
               <CollapsibleTrigger as-child>
                 <SidebarMenuButton>
-                  <Server class="h-4 w-4" />
-                  <span>VPN Month</span>
+                <Users class="h-4 w-4" />
+                <span>Pelanggan</span>
                   <ChevronDown
                     class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
                   />
@@ -40,7 +40,7 @@
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in UserMonthItems" :key="item.title">
+                  <SidebarMenuSubItem v-for="item in CostumerItems" :key="item.title">
                     <SidebarMenuSubButton as-child>
                       <NuxtLink :to="item.url">
                         <span>{{ item.title }}</span>
@@ -51,179 +51,8 @@
               </CollapsibleContent>
             </Collapsible>
           </SidebarMenuItem>
-          <!-- community  with submenu -->
-
-          <!-- ServerAlways  with submenu -->
-          <SidebarMenuItem>
-            <Collapsible v-model:open="UserAlwaysOpen" class="group/collapsible">
-              <CollapsibleTrigger as-child>
-                <SidebarMenuButton>
-                  <Server class="h-4 w-4" />
-                  <span>VPN AlwaysOn</span>
-                  <ChevronDown
-                    class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
-                  />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in UserAlwaysItems" :key="item.title">
-                    <SidebarMenuSubButton as-child>
-                      <NuxtLink :to="item.url">
-                        <span>{{ item.title }}</span>
-                      </NuxtLink>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarMenuItem>
-          <!-- ServerAlways  with submenu -->
-
-          <!-- ServerAlways  with submenu -->
-          <SidebarMenuItem>
-            <Collapsible v-model:open="UserPayAsOpen" class="group/collapsible">
-              <CollapsibleTrigger as-child>
-                <SidebarMenuButton>
-                  <Server class="h-4 w-4" />
-                  <span>VPN PayAs</span>
-                  <ChevronDown
-                    class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
-                  />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in UserPayAsItems" :key="item.title">
-                    <SidebarMenuSubButton as-child>
-                      <NuxtLink :to="item.url">
-                        <span>{{ item.title }}</span>
-                      </NuxtLink>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarMenuItem>
-          <!-- ServerAlways  with submenu -->
-
-          <!-- Price with submenu -->
-          <SidebarMenuItem>
-            <Collapsible v-model:open="PriceOpen" class="group/collapsible">
-              <CollapsibleTrigger as-child>
-                <SidebarMenuButton>
-                  <DollarSign class="h-4 w-4" />
-                  <span>Price</span>
-                  <ChevronDown
-                    class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
-                  />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in PriceItems" :key="item.title">
-                    <SidebarMenuSubButton as-child>
-                      <NuxtLink :to="item.url">
-                        <span>{{ item.title }}</span>
-                      </NuxtLink>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarMenuItem>
-          <!-- price  with submenu -->
-
-          <!-- Top up -->
-          <SidebarMenuItem>
-            <SidebarMenuButton as-child>
-              <NuxtLink to="/users/balance">
-                <Settings2 class="h-4 w-4" />
-                <span>TopUp</span>
-                <ChevronRight class="ml-auto h-4 w-4" />
-              </NuxtLink>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-
-          <!-- Invoice with submenu -->
-          <SidebarMenuItem>
-            <Collapsible v-model:open="invoiceOpen" class="group/collapsible">
-              <CollapsibleTrigger as-child>
-                <SidebarMenuButton>
-                  <FileText class="h-4 w-4" />
-                  <span>Invoice</span>
-                  <ChevronDown
-                    class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
-                  />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in invoiceItems" :key="item.title">
-                    <SidebarMenuSubButton as-child>
-                      <NuxtLink :to="item.url">
-                        <span>{{ item.title }}</span>
-                      </NuxtLink>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarMenuItem>
-          <!-- Invoice  with submenu -->
-
-          <!-- Profil  with submenu -->
-          <SidebarMenuItem>
-            <Collapsible v-model:open="ProfilOpen" class="group/collapsible">
-              <CollapsibleTrigger as-child>
-                <SidebarMenuButton>
-                  <User class="h-4 w-4" />
-                  <span>Profile</span>
-                  <ChevronDown
-                    class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
-                  />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in ProfileItems" :key="item.title">
-                    <SidebarMenuSubButton as-child>
-                      <NuxtLink :to="item.url">
-                        <span>{{ item.title }}</span>
-                      </NuxtLink>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarMenuItem>
-          <!-- Profil  with submenu -->
-
-          <!-- Log with submenu -->
-          <SidebarMenuItem>
-            <Collapsible v-model:open="LogOpen" class="group/collapsible">
-              <CollapsibleTrigger as-child>
-                <SidebarMenuButton>
-                  <AlertTriangle class="h-4 w-4" />
-                  <span>Log</span>
-                  <ChevronDown
-                    class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
-                  />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in LogItems" :key="item.title">
-                    <SidebarMenuSubButton as-child>
-                      <NuxtLink :to="item.url">
-                        <span>{{ item.title }}</span>
-                      </NuxtLink>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarMenuItem>
+          
+  
 
           <!-- community  with submenu -->
           <SidebarMenuItem>
@@ -255,7 +84,7 @@
       </SidebarGroup>
 
       <!-- admin Area -->
-      <SidebarGroup v-if="canAccessAdminArea">
+      <SidebarGroup v-if="isMounted && canAccessAdminArea">
         <SidebarGroupLabel>Admin Area</SidebarGroupLabel>
         <SidebarMenu>
           <!-- users  with submenu -->
@@ -264,7 +93,7 @@
               <CollapsibleTrigger as-child>
                 <SidebarMenuButton>
                   <UserCheck class="h-4 w-4" />
-                  <span>Users</span>
+                  <span>Subscription</span>
                   <ChevronDown
                     class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
                   />
@@ -272,7 +101,7 @@
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in AdminUserItems" :key="item.title">
+                  <SidebarMenuSubItem v-for="item in SubscriptionItems" :key="item.title">
                     <SidebarMenuSubButton as-child>
                       <NuxtLink :to="item.url">
                         <span>{{ item.title }}</span>
@@ -450,41 +279,17 @@
       </SidebarGroup>
 
       <!-- warehouse Area -->
-      <SidebarGroup>
-        <!-- <SidebarGroup v-if="canAccessSellerArea"></SidebarGroup> -->
+      
+        <SidebarGroup v-if="isMounted && canAccesswarehouse">
         <SidebarGroupLabel>Warehouse</SidebarGroupLabel>
         <SidebarMenu>
-          <!-- Costumer with submenu -->
-          <SidebarMenuItem>
-            <Collapsible v-model:open="SellerUserOpen" class="group/collapsible">
-              <CollapsibleTrigger as-child>
-                <SidebarMenuButton>
-                <Users class="h-4 w-4" />
-                <span>Pelanggan</span>
-                  <ChevronDown
-                    class="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180"
-                  />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem v-for="item in CostumerItems" :key="item.title">
-                    <SidebarMenuSubButton as-child>
-                      <NuxtLink :to="item.url">
-                        <span>{{ item.title }}</span>
-                      </NuxtLink>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarMenuItem>
+
           <!-- Kategori -->
           <SidebarMenuItem>
             <SidebarMenuButton as-child tooltip="Kategori">
             <NuxtLink to="/category/manage">
               <LayoutGrid class="h-4 w-4" />
-              <span>Kategori</span>
+              <span>COBA page Kategori</span>
             </NuxtLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -689,8 +494,10 @@ import {
 
 
 import { useLocalStorage } from '@vueuse/core'
-import { onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { alertError } from '../../lib/alert'
+
+const isMounted = ref(false)
 
 // gokasir 
 
@@ -711,7 +518,7 @@ const AdminServerMonthOpen = ref(false)
 const AdminServerpayasOpen = ref(false)
 const AdminSettingsOpen = ref(false)
 
-const SellerUserOpen = ref(false)
+const CostumerOpen = ref(false)
 const SellerWdOpen = ref(false)
 const SellerpayasOpen = ref(false)
 const SellersvralwaysOpen = ref(false)
@@ -820,11 +627,6 @@ const AdminServeralwaysItems = [
 
 const CostumerItems = [
   {
-    title: 'Detail',
-    url: '/customers',
-  },
-
-  {
     title: 'Manage',
     url: '/customers/manage',
   },
@@ -841,8 +643,8 @@ const ProdukItems = [
     url: '/employer/supplier',
   },
   {
-    title: 'Accounts',
-    url: '/employer/accounts',
+    title: 'Kategori',
+    url: '/employer/product/category',
   },
 
 ]
@@ -946,15 +748,16 @@ const CommunityItems = [
   },
 ]
 
-const AdminUserItems = [
-  {
-    title: 'Manage',
-    url: '/admin/users',
+const SubscriptionItems = [
+    {
+    title: 'List',
+    url: '/admin/subscription',
   },
   {
-    title: 'Activity',
-    url: '/admin/users/activity',
+    title: 'Plan',
+    url: '/admin/subscription/plan',
   },
+
 ]
 
 const ProfileItems = [
@@ -969,56 +772,27 @@ const ProfileItems = [
 ]
 
 const token = useLocalStorage('token', '')
+const role = useLocalStorage('role', '')
 
-// User profile data
-const userProfile = ref({
-  id: '',
-  name: '',
-  email: '',
-  balance: 0,
-  created_at: '',
-  role: 'user',
-})
-
-// Fetch user profile
-// const fetchUserProfile = async () => {
-//   try {
-//     const response = await getUserProfile({ token: token.value })
-//     const result = await response.json()
-
-//     if (!response.ok) {
-//       await alertError(result.errors)
-//       return
-//     }
-//     if (result.data) {
-//       userProfile.value = result.data
-//     }
-//   }
-//   catch (error) {
-//     // console.error('Failed to fetch user profile:', error)
-//     await alertError(error instanceof Error ? error.message : 'Failed to fetch user profile')
-//   }
-// }
-
-// Computed properties for role-based access
 
 // access cashier
-const canAccessMemberArea = computed(() => {
-  return ['admin', 'Warehouse', 'cashier'].includes(userProfile.value.role)
+const canAccesscashier = computed(() => {
+  return ['admin', 'warehouse', 'cashier'].includes(role.value)
 })
 
 // access admin
 const canAccessAdminArea = computed(() => {
-  return userProfile.value.role === 'admin'
+  return role.value === 'admin'
 })
 
 // access warehouse
-const canAccessSellerArea = computed(() => {
-  return ['admin', 'Warehouse', 'cashier'].includes(userProfile.value.role)
+const canAccesswarehouse = computed(() => {
+  return ['admin', 'warehouse'].includes(role.value)
 })
 
 // Initialize profile data on component mount
 onMounted(() => {
+  isMounted.value = true
   if (token.value) {
     // fetchUserProfile()
   }
